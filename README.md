@@ -39,6 +39,6 @@ instantiate ## for first time installation
 ```
 To regenerate figures either use jupyter notebook within `notebooks` directory or use script as follows:
 ```julia
- include("notebooks/znf808_transcriptomics_figures.jl")
+ include("notebooks/znf808_transcriptomic_figures.jl")
  ```
 This will generate a `figures` folder and will generate all figure panels in `svg` and `png` format.
