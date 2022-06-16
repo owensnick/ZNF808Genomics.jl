@@ -37,7 +37,7 @@ function setupdeseq(design, counts, formula=R"~Group")
         dds <- DESeqDataSetFromMatrix(countData = countdata, colData = design, design = $formula);
     """
 end
-#dds <- DESeq(dds, quiet=TRUE);
+
 function normcounts()
     R"""
         dds <- estimateSizeFactors(dds)
@@ -78,36 +78,6 @@ function deseq_batch_local(meta, counts, genetss, sampledict=Dict("D0" => ["D0"]
 end
 
 
-# function de_local_analysis(meta, counts, genetss, 
-#     sampledict=Dict("D0" => ["D0", "DE"],
-#                     "DE" => ["D0", "DE", "S2"],
-#                     "S2" => ["DE", "S2", "S3"],
-#                     "S3" => ["S2", "S3", "S4"],
-#                     "S4" => ["S3", "S4"],
-#                     "S5" => ["S4", "S5"]); fct=log2(1.25))
-#     (:Run ∈ propertynames(meta)) && ("R3" ∈ meta.Run) && println("Warning run 3 samples in use function defaults for run2.")
-#     design, filtcounts = filterdesign(meta, counts);
-#     stages = unique(design.Stage)
-#     setupdeseq(design, filtcounts)
-#     ncounts = normcounts()
-#     dfs = DataFrame[]
-#     println("Running DESeq sharing information between local stages...")
-#     @showprogress "DESeq by Stage: " for s in stages
-#         designstage, countstage = filterdesign(@subset(design, :Stage .∈ Ref(sampledict[s])), counts)
-#         setupdeseq(designstage, countstage)
-#         # deseq()
-#         R"""
-#             dds <- DESeq(dds, quiet=TRUE)
-#         """
-#         degs = deseq_pairwisegroup([s], independentFiltering=true, fct=fct);
-#         push!(dfs, degs)
-#     end
-#     deg = reduce(vcat, dfs)
-#     deg = annotatetss(deg, genetss)
-#     meancounts = calcmeancounts(design, ncounts);
-
-#     (design=design, filtcounts=filtcounts, stages=stages, ncounts=ncounts, meancounts=meancounts, deg=deg)
-# end
 
 function collectresults(label="")
     R"""
@@ -124,32 +94,6 @@ function collectresults(label="")
     rdf
 end
 
-# """
-#     deseq_pairwisegroup(meta)
-
-# Build pairwise comparisons data must of have loaded with ~Group design.
-# """
-# function deseq_pairwisegroup(stages; independentFiltering=false, padj_thresh=0.05, fct=log2(1.25), obj=R"dds")
-#     dfs = DataFrame[]
-#     @showprogress "Collecting DESeq2 results: " for stage in stages
-#         stlabel_WT = string("WT_", stage)
-#         stlabel_KO = string("KO_", stage)
-#         R"""
-#             res <- results($obj, contrast=c("Group", $stlabel_KO, $stlabel_WT), independentFiltering=$independentFiltering)
-#             disp <- dispersions($obj)
-#         """
-#         res = collectresults()
-#         res[!, :Stage] .= stage
-#         @rget disp
-#         res[!, :Dispersion] = disp
-#         push!(dfs, res)
-#     end
-#     df = reduce(vcat, dfs)
-#     df[!, :sig]  = (coalesce.(df.padj, 1.0) .< padj_thresh) .& (abs.(df.log2FoldChange) .> fct)
-#     df[!, :dsig] = df.sig.*sign.(df.log2FoldChange)
-#     df[!, :GeneName] = last.(split.(df.Gene, "|"))
-#     df
-# end
 
 """
     deseq_pairwisegroup_batch(meta)
@@ -181,52 +125,3 @@ function deseq_pairwisegroup_batch(stages; independentFiltering=false, padj_thre
     df
 end
     
-
-# function deseq_stageko(design, counts)
-
-#     ## stage ko model
-#     loaddesign(design)
-#     loadcounts(counts)
-
-#      R"""
-#              dds <- DESeqDataSetFromMatrix(countData = countdata, colData = design, design = ~Stage + GenoType + Stage:GenoType);
-#              dds <- DESeq(dds, quiet=TRUE);
-             
-#      """;
-
-#     ["GenoType_WT_vs_KO", "StageS2.GenoTypeWT", "StageS3.GenoTypeWT", "StageS4.GenoTypeWT", "StageS5.GenoTypeWT"]
-# end
-
-
-
-# function de_by_stage(meta, counts; independentFiltering=false, formula=R"~GenoType", combko = false, padj_thresh=0.05, fct = log2(1.25))
-
-#     stages = unique(meta.Stage)
-#     dfs = DataFrame[]
-#     @showprogress "DESeq2 By Stage: " for stage in stages
-#         metastage = meta[meta.Stage .== stage, :]
-#         design, counttable = filterdesign(metastage, counts)
-#         loaddesign(design[!, [:Sample, :GenoType]])
-#         loadcounts(counttable)
-#         R"""
-#             dds <- DESeqDataSetFromMatrix(countData = countdata, colData = design, design = $formula );
-#             dds <- DESeq(dds, quiet=TRUE);
-#             res <- results(dds, contrast=c("GenoType", "KO", "WT"), independentFiltering=$independentFiltering)
-#             disp <- dispersions(dds)
-#         """
-#         res = collectresults()
-#         res[!, :Stage] .= stage
-#         @rget disp
-#         res[!, :Dispersion] = disp
-
-#         push!(dfs, res)
-#     end
-
-#     df = reduce(vcat, dfs)
-#     df[!, :sig]  = (coalesce.(df.padj, 1.0) .< padj_thresh) .& (abs.(df.log2FoldChange) .> fct)
-#     df[!, :dsig] = df.sig.*sign.(df.log2FoldChange)
-#     df[!, :GeneName] = last.(split.(df.Gene, "|"))
-
-#     df
-# end
-
