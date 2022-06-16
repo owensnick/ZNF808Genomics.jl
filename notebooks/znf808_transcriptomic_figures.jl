@@ -96,23 +96,27 @@ fig4e = panc_hep_enrichment_plot(deresults, laser_dorsal_hep)
 
 sup_fig1b = plot_human_embryo_rnaseq(human_embryo_rnaseq, r"ZNF808|ZNF440|ZNF525|ZNF468|ZNF433|ZNF578");
 plot!(fontfamily="helvetica", title="Expression of MER11-binding KRAB ZFPs in human embryo (RNA-seq)")
+savedisplay("sup_fig1b")
 
 sup_fig7ab = geneheatmap_scatter(r"ZNF(808|525|440|468|433|578)$", deresults, meta = design_ips_full, ncounts=ncounts, size=(1000, 250), fontfamily="helvetica", titlefont=font(10, "helvetica"))
-
+savedisplay("sup_fig7ab")
 
 sup_fig7cd = geneheatmap_scatter(r"GATA(1|3|4|6)$|HNF4A|HNF4G|\|DUX$|\|NANOG$",  deresults, meta = design_ips_full, ncounts=ncounts, k=6, size=(1000, 250), fontfamily="helvetica", titlefont=font(10, "helvetica"))
-
+savedisplay("sup_fig7cd")
 
 supp_fig9 = ips_comparison(deresults, design_ips_full, ncounts)
+savedisplay("sup_fig9")
 
 supp_fig_10a = epi_cluster_proximity_enrichments(epiclusters, deresults)
+savedisplay("sup_fig10a")
 
 supp_fig_10b = enrichrplot(deresults.enfisher, ["Fetalliver", "Liver", "TGF-beta regulation of extracellular matrix"],
     ["PancreaticIslet", "Pancreas", "regulation of transcription from RNA polymerase II promoter (GO:0006357)", "negative regulation of cell differentiation (GO:0045596)", "TGF-beta regulation of extracellular matrix"], 10)
-
+savedisplay("sup_fig10b")
 
 pa = plotgenesimple(r"\|AFP$", deresults, stagelabels, meta = @subset(deresults.design, :Stage .∈ Ref(["D0", "DE", "S2", "S3", "S4", "S5", "S6", "S7"])), plotpair=true)#, ncounts=ncounts, trans = x -> x)
 hryticks()
 pd = plotgenesimple(r"\|PDX1$", deresults, stagelabels, meta = @subset(deresults.design, :Stage .∈ Ref(["D0", "DE", "S2", "S3", "S4", "S5", "S6", "S7"])), plotpair=true)#, ncounts=ncounts, trans = x -> x)
 hryticks()
 sup_fig_11b = plot(pa, pd, leg=:topleft, size=(700, 300))
+savedisplay("sup_fig11b")
