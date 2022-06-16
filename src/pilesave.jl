@@ -29,7 +29,6 @@ end
 function piles(chrom, loc, inds, grouplabel, labels, FM; saveload=true, projdir=getprojectdir())
     file = joinpath(projdir, "results", "piles", string("pile_", grouplabel, "_", chrom, "_", first(loc), "_", last(loc), ".tsv.gz"))
 
-
     piles_saveload(chrom, loc, inds, labels, FM, file, saveload=saveload)
 end
 
