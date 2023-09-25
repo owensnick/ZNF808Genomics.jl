@@ -1,5 +1,6 @@
 # ZNF808 Genomics Figure Notebook
 
+[![DOI](https://zenodo.org/badge/696224255.svg)](https://zenodo.org/badge/latestdoi/696224255)
 
 This julia project contains data and code to generate figures for:
 
