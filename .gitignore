@@ -1,1 +1,3 @@
-/Manifest.toml
+notebooks/.ipynb_checkpoints
+figures/
+results/*.gz
