@@ -1,0 +1,9 @@
+Sample	SampleNum	ExpNum	GenoType	Clone	Stage	Replicate	Run	Label	Group	Index	FKO
+s1	1	E11	WT	H1	D0	1	R3	R3_H1_D0	WT_D0	55	0
+s5	5	E11	WT	H1	DE	1	R3	R3_H1_DE	WT_DE	59	0
+s9	9	E11	WT	H1	S2	1	R3	R3_H1_S2	WT_S2	63	0
+s13	13	E11	WT	H1	S3	1	R3	R3_H1_S3	WT_S3	67	0
+s29	29	E46	KO	Patient	D0	1	R3	R3_Patient_D0	KO_D0	83	1
+s30	30	E46	KO	Patient	DE	1	R3	R3_Patient_DE	KO_DE	84	1
+s31	31	E46	KO	Patient	S2	1	R3	R3_Patient_S2	KO_S2	85	1
+s32	32	E46	KO	Patient	S3	1	R3	R3_Patient_S3	KO_S3	86	1
