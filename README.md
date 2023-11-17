@@ -13,9 +13,7 @@ Repository contains all code to analyse the epigenetic and transcriptomic impact
 Code and data for analysis of MER11 elements and epigentic data available in folder:
 [Imbeault_lab](Imebeault_lab/)
 
-A pre-print with a more restricted analysis is available here:
-medRxiv 2021.08.23.21262262; doi: https://doi.org/10.1101/2021.08.23.21262262
-
+This has now been published in Nature Genetics: https://www.nature.com/articles/s41588-023-01565-x
 
 ## Prerequistes
 Julia >= 1.8, all julia packages and their versions are specified in the included Project.toml and Manifest.toml.
